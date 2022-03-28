@@ -28,11 +28,6 @@ export default function Home({
         <button className={utilStyles.button}>encode</button>
         {/* <button className={utilStyles.button}>decode</button> */}
         </div>
-        <Shortlink destination={`
-        https://www.google.com/search?q=box+shadow+css+generator&oq=box+&aqs=chrome.0.69i59j69i57j35i39j0i20i263i433i512j0i20i263i512j69i60j69i61j69i60.996j0j7&sourceid=chrome&ie=UTF-8
-        `} shortlink={'tini.url/ag4a96nb'}></Shortlink>
-        <div >
-        </div>
     </Layout>
   )
 }
