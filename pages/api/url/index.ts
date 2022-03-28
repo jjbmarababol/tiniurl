@@ -3,6 +3,6 @@ import { add } from '../../../lib/shortlinks';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
     const { destination } = req.body;
-    const links = await add('https://firebase.google.com/docs/firestore/quickstart', 'tini.url/123814');
+    const links = await add('http://young-stalin.com/hair.php?tag=Short');
     res.send(links);
 }
