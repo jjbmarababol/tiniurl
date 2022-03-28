@@ -1,10 +1,9 @@
 import { db } from './firebase';
 import { collection, addDoc, doc, getDoc } from 'firebase/firestore';
 
-export async function add(destination: string, shortlink: string){
+export async function add(destination: string){
     const ref = await addDoc(collection(db, 'shortlinks'), {
-        destination,
-        shortlink
+        destination
     });
     return `${process.env.SHORTLINK_BASE_URL}/${ref.id}`;
 }

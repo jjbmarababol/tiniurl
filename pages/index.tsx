@@ -15,6 +15,7 @@ export default function Home({
     id: string
   }[]
 }) {
+  
   return (
     <Layout home>
       <Head>
