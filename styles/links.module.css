@@ -1,0 +1,16 @@
+.shortlink__link {
+  font-weight: 400;
+  color: #000;
+}
+
+.shortlink__hostname {
+  font-weight: 300;
+  color: #a29c9c;
+}
+
+.shortlink__container {
+  padding: 20px 0;
+  border-bottom: 1px solid #bdc3c7;
+  width: 100%;
+  text-align: left;
+}

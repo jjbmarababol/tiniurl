@@ -3,16 +3,21 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "lint": "next lint",
+    "format": "prettier --write \"**/*.{ts, tsx}\""
   },
   "dependencies": {
+    "clipboard": "^2.0.10",
     "convict": "^6.2.2",
     "date-fns": "^2.11.1",
     "firebase": "^9.6.10",
     "firebase-admin": "^10.0.2",
     "gray-matter": "^4.0.2",
     "next": "latest",
+    "prettier": "^2.6.1",
     "react": "17.0.2",
+    "react-copy-to-clipboard": "^5.0.4",
     "react-dom": "17.0.2",
     "react-icons": "^4.3.1",
     "remark": "^14.0.1",
@@ -21,7 +26,11 @@
   "devDependencies": {
     "@types/convict": "^6.1.1",
     "@types/node": "^16.3.3",
+    "@types/prettier": "^2.4.4",
     "@types/react": "^17.0.14",
+    "@types/react-copy-to-clipboard": "^5.0.2",
+    "eslint": "8.12.0",
+    "eslint-config-next": "12.1.2",
     "sass": "^1.49.9",
     "typescript": "^4.3.5"
   }
