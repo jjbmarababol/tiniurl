@@ -22,7 +22,7 @@ const useShortlinks = () => {
     });
     console.log(shortlinks);
     return unsubscribe;
-  }, []);
+  });
 
   return { shortlinks, setShortlinks };
 };
