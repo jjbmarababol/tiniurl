@@ -2,13 +2,12 @@
 module.exports = {
   reactStrictMode: true,
   async redirects() {
-    
     return [
       {
-        source: '/:id',
-        destination: '/api/url/:id',
+        source: "/:id",
+        destination: "/api/urls/:id",
         permanent: true,
       },
-    ]
+    ];
   },
-}
+};

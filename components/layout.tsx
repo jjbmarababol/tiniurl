@@ -1,27 +1,15 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from './layout.module.css'
-import utilStyles from '../styles/utils.module.scss'
-import Link from 'next/link'
+import Head from "next/head";
+import styles from "../styles/layout.module.css";
 
-export const name = 'tini.url/'
-export const siteTitle = 'URL Shortening Service'
+export const name = "tini.url/";
+export const siteTitle = "URL Shortening Service";
 
-export default function Layout({
-  children,
-  home
-}: {
-  children: React.ReactNode
-  home?: boolean
-}) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className={styles.container}>
+    <div>
       <Head>
         <link rel="icon" href="/favicon.ico" />
-        <meta
-          name="description"
-          content={siteTitle}
-        />
+        <meta name="description" content={siteTitle} />
         <meta
           property="og:image"
           content={`https://og-image.vercel.app/${encodeURI(
@@ -31,41 +19,7 @@ export default function Layout({
         <meta name="og:title" content={siteTitle} />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
-      <header className={styles.header}>
-        {home ? (
-          <>
-            <h1 className={utilStyles.heading2Xl}>{name}</h1>
-          </>
-        ) : (
-          <>
-            <Link href="/">
-              <a>
-                <Image
-                  priority
-                  src="/images/profile.jpg"
-                  className={utilStyles.borderCircle}
-                  height={108}
-                  width={108}
-                  alt={name}
-                />
-              </a>
-            </Link>
-            <h2 className={utilStyles.headingLg}>
-              <Link href="/">
-                <a className={utilStyles.colorInherit}>{name}</a>
-              </Link>
-            </h2>
-          </>
-        )}
-      </header>
-      <main>{children}</main>
-      {!home && (
-        <div className={styles.backToHome}>
-          <Link href="/">
-            <a>← Back to home</a>
-          </Link>
-        </div>
-      )}
+      <main className={styles.container}>{children}</main>
     </div>
-  )
+  );
 }
