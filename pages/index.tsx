@@ -3,41 +3,33 @@ import Layout, { name } from "../components/layout";
 import { post } from "../lib/requests";
 import utilStyles from "../styles/utils.module.scss";
 import layoutStyles from "../styles/layout.module.css";
-
-import { ShortlinkFormat } from "../lib/shortlinks";
 import { useEffect, useState } from "react";
 import Shortlink from "../components/shortlink";
-import { shortlinkAPI } from "../hooks/use-shortlinks";
+// import { shortlinkAPI } from "../hooks/use-shortlinks";
 
 type Action = "encode" | "decode";
-
+const shortlinks = [];
 export default function Home() {
-  const { useShortlinks } = shortlinkAPI;
-  const { shortlinks } = useShortlinks();
+  // const { useShortlinks } = shortlinkAPI;
+  // const { shortlinks } = useShortlinks();
   const [destination, setDestination] = useState<string>("");
   const [action, setAction] = useState<Action>("encode");
-  const [shortlink, setShortlink] = useState<ShortlinkFormat>({
-    id: "",
-    link: "",
-    hostname: "",
-  });
-  const createShortlink = async (type: Action) => {
-    switch (type) {
-      case "decode":
-        const decodedLink = await post("/api/urls/encode", {
-          destination,
-        });
-        setShortlink(decodedLink);
-        break;
-      case "encode":
-      default:
-        const encodedLink = await post("/api/urls/encode", {
-          destination,
-        });
-        setShortlink(encodedLink);
-        break;
-    }
+  const [link, setLink] = useState<string>('');
+  
+  const createShortlink = async (action: Action) => {
+      const { link } = await post(`/api/urls/${action}`, {
+        destination,
+      });
+      setLink(link);
   };
+
+  useEffect(() => {
+    if(destination.includes(process.env.NEXT_PUBLIC_SHORTLINK_BASE_URL)) {
+      setAction('decode')
+    }else {
+      setAction('encode')
+    }
+  }, [destination, setAction]);
 
   return (
     <Layout>
@@ -62,6 +54,14 @@ export default function Home() {
           >
             {action}
           </button>
+          <button
+            className={utilStyles.button}
+          >
+            clear
+          </button>
+        </div>
+        <div>
+          {link}
         </div>
       </div>
       <div className={layoutStyles.section}>
