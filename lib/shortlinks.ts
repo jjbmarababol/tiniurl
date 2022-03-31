@@ -31,7 +31,11 @@ export const remove = async (id: string) => {
 };
 
 export const clear = async () => {
-  await deleteDoc(doc(db, 'shortlinks'));
+  const docRef = collection(db, 'shortlinks');
+  const querySnapshot = await getDocs(docRef);
+  querySnapshot.forEach(snapshot => {
+    remove(snapshot.id);
+  });
 };
 
 export const read = async (id: string): Promise<Shortlink | false> => {

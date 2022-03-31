@@ -13,4 +13,16 @@
   border-bottom: 1px solid #bdc3c7;
   width: 100%;
   text-align: left;
+  display: flex;
+  column-gap: 10px;
+  justify-content: space-between;
+  align-items: center;
 }
+
+.shortlink__button{
+  background: black;
+  border: 1px solid transparent;
+  color: white;
+  cursor: pointer;
+}
+
