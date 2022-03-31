@@ -1,5 +1,5 @@
 import Head from "next/head";
-import styles from "../styles/layout.module.css";
+import styles from "../styles/layout.module.scss";
 
 export const name = "tini.url/";
 export const siteTitle = "URL Shortening Service";
