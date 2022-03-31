@@ -8,7 +8,6 @@ import Shortlink from "../components/shortlink";
 import { shortlinkAPI } from "../hooks/use-shortlinks";
 
 type Action = "encode" | "decode";
-const shortlinks = [];
 export default function Home() {
   const { useShortlinks } = shortlinkAPI;
   const { shortlinks } = useShortlinks();
@@ -17,10 +16,15 @@ export default function Home() {
   const [link, setLink] = useState<string>('');
   
   const createShortlink = async (action: Action) => {
+    try {
+      const isLink = new URL(destination);
       const { link } = await post(`/api/urls/${action}`, {
         destination,
       });
       setLink(link);
+    } catch (_) {
+      return false;  
+    }
   };
   
   const clearShortlinks = async () => {
