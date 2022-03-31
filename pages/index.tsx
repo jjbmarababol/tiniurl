@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Layout, { name } from "../components/layout";
-import { post } from "../lib/requests";
+import { isValidHttpUrl, post } from "../lib/requests";
 import utilStyles from "../styles/utils.module.scss";
 import layoutStyles from "../styles/layout.module.scss";
 import { useEffect, useState } from "react";
@@ -16,14 +16,11 @@ export default function Home() {
   const [link, setLink] = useState<string>('');
   
   const createShortlink = async (action: Action) => {
-    try {
-      const isLink = new URL(destination);
+    if(isValidHttpUrl) {
       const { link } = await post(`/api/urls/${action}`, {
         destination,
       });
       setLink(link);
-    } catch (_) {
-      return false;  
     }
   };
   
