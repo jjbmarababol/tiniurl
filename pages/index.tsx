@@ -16,7 +16,7 @@ export default function Home() {
   const [link, setLink] = useState<string>('');
   
   const createShortlink = async (action: Action) => {
-    if(isValidHttpUrl) {
+    if(isValidHttpUrl(destination)) {
       const { link } = await post(`/api/urls/${action}`, {
         destination,
       });
