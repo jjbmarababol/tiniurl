@@ -5,9 +5,7 @@ import {
   doc,
   getDoc,
   getDocs,
-  onSnapshot,
-  query,
-  where,
+  deleteDoc,
 } from 'firebase/firestore';
 
 interface Shortlink {
@@ -26,6 +24,14 @@ export const add = async (destination: string): Promise<Shortlink> => {
     destination,
   });
   return { id, destination };
+};
+
+export const remove = async (id: string) => {
+  await deleteDoc(doc(db, 'shortlinks', id));
+};
+
+export const clear = async () => {
+  await deleteDoc(doc(db, 'shortlinks'));
 };
 
 export const read = async (id: string): Promise<Shortlink | false> => {

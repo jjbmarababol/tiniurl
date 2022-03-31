@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { add, format } from '../../../lib/shortlinks';
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+export const handle = async (req: NextApiRequest, res: NextApiResponse) => {
   const {
     body: { destination },
     headers: { host },
@@ -13,3 +13,5 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     throw Error(e);
   }
 };
+
+export default handle;
