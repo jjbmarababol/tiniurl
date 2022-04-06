@@ -3,6 +3,7 @@ import { read } from '../../../lib/shortlinks';
 
 export const handle = async (req: NextApiRequest, res: NextApiResponse) => {
   const id = req.body.destination.split('/')[1];
+  console.log(id)
   const data = await read(id);
   if (!data) {
     return res.status(200);
