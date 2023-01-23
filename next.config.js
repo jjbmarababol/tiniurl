@@ -4,8 +4,13 @@ module.exports = {
   async redirects() {
     return [
       {
-        source: "/:id",
-        destination: "/api/urls/:id",
+        source: '/public/favicon.ico',
+        destination: '/images/favicon.ico',
+        permanent: true,
+      },
+      {
+        source: '/:id',
+        destination: '/api/urls/:id',
         permanent: true,
       },
     ];

@@ -7,26 +7,23 @@ import {
   getDocs,
   deleteDoc,
 } from 'firebase/firestore';
+import {
+  BaseUrl,
+  Destination,
+  ErrorResponse,
+  Id,
+  Shortlink,
+  ShortlinkFormat,
+} from '../models';
 
-interface Shortlink {
-  id: string;
-  destination: string;
-}
-
-export interface ShortlinkFormat {
-  id: string;
-  hostname: string;
-  link: string;
-}
-
-export const add = async (destination: string): Promise<Shortlink> => {
+export const add = async (destination: Destination): Promise<Shortlink> => {
   const { id } = await addDoc(collection(db, 'shortlinks'), {
     destination,
   });
   return { id, destination };
 };
 
-export const remove = async (id: string) => {
+export const remove = async (id: Id) => {
   await deleteDoc(doc(db, 'shortlinks', id));
 };
 
@@ -38,14 +35,16 @@ export const clear = async () => {
   });
 };
 
-export const read = async (id: string): Promise<Shortlink | false> => {
+export const read = async (id: Id): Promise<Shortlink | ErrorResponse> => {
   const docRef = doc(db, 'shortlinks', id);
   const docSnap = await getDoc(docRef);
-  if (!docSnap.exists) {
-    return false;
+  const data = docSnap.data();
+
+  if (!docSnap.exists || !data || !data?.destination) {
+    return { hasError: true };
   }
-  const { destination } = docSnap.data();
-  return { destination, id };
+
+  return { destination: data.destination, id };
 };
 
 export const browse = async (): Promise<Shortlink[]> => {
@@ -61,9 +60,9 @@ export const browse = async (): Promise<Shortlink[]> => {
 };
 
 export const format = (
-  id: string,
-  destination: string,
-  baseUrl: string,
+  id: Id,
+  destination: Destination,
+  baseUrl: BaseUrl,
 ): ShortlinkFormat => {
   const { hostname } = new URL(destination);
   return {

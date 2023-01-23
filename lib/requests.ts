@@ -1,4 +1,6 @@
-export const post = async (endpoint: string, body: object) => {
+import { Endpoint, Input, Body } from '../models/requests.model';
+
+export const post = async (endpoint: Endpoint, body: Body) => {
   const res = await fetch(endpoint, {
     method: 'POST',
     headers: {
@@ -9,7 +11,7 @@ export const post = async (endpoint: string, body: object) => {
   return await res.json();
 };
 
-export const isValidHttpUrl = (input: string) => {
+export const isValidHttpUrl = (input: Input) => {
   let url;
 
   try {
