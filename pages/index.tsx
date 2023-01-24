@@ -1,42 +1,42 @@
-import Head from "next/head";
-import Layout, { name } from "../components/layout";
-import { isValidHttpUrl, post } from "../lib/requests";
-import utilStyles from "../styles/utils.module.scss";
-import layoutStyles from "../styles/layout.module.scss";
-import { useEffect, useState } from "react";
-import Shortlink from "../components/shortlink";
-import { shortlinkAPI } from "../hooks/use-shortlinks";
+import Head from 'next/head';
+import Layout, { name } from '../components/layout';
+import { isValidHttpUrl, post } from '../lib/requests';
+import utilStyles from '../styles/utils.module.scss';
+import layoutStyles from '../styles/layout.module.scss';
+import { useMemo, useState } from 'react';
+import Shortlink from '../components/shortlink';
+import { shortlinkAPI } from '../hooks/use-shortlinks';
 
-type Action = "encode" | "decode";
+type Action = 'encode' | 'decode';
 export default function Home() {
   const { useShortlinks } = shortlinkAPI;
   const { shortlinks } = useShortlinks();
-  const [destination, setDestination] = useState<string>("");
-  const [action, setAction] = useState<Action>("encode");
+  const [destination, setDestination] = useState<string>('');
+  // const [action, setAction] = useState<Action>("encode");
   const [link, setLink] = useState<string>('');
-  
-  const createShortlink = async (action: Action) => {
-    
-    if(isValidHttpUrl(destination) || destination.includes(process.env.NEXT_PUBLIC_SHORTLINK_BASE_URL)) {
-      const { link } = await post(`/api/urls/${action}`, {
+
+  const encodeType: Action = useMemo(() => {
+    return destination.includes(process.env.NEXT_PUBLIC_SHORTLINK_BASE_URL)
+      ? 'decode'
+      : 'encode';
+  }, [destination]);
+
+  const createShortlink = async () => {
+    if (
+      isValidHttpUrl(destination) ||
+      destination.includes(process.env.NEXT_PUBLIC_SHORTLINK_BASE_URL)
+    ) {
+      const { link } = await post(`/api/urls/${encodeType}`, {
         destination,
       });
       setLink(link);
     }
   };
-  
-  const clearShortlinks = async () => {
-     await fetch('/api/urls/clear');
-     setLink('');
-  };
 
-  useEffect(() => {
-    if(destination.includes(process.env.NEXT_PUBLIC_SHORTLINK_BASE_URL)) {
-      setAction('decode')
-    }else {
-      setAction('encode')
-    }
-  }, [destination, setAction]);
+  const clearShortlinks = async () => {
+    await fetch('/api/urls/clear');
+    setLink('');
+  };
 
   return (
     <Layout>
@@ -48,7 +48,7 @@ export default function Home() {
         <div className={utilStyles.field}>
           <input
             className={utilStyles.input}
-            onKeyUp={(e) => {
+            onKeyUp={e => {
               setDestination(e.currentTarget.value);
             }}
           />
@@ -57,9 +57,9 @@ export default function Home() {
         <div className={utilStyles.buttons}>
           <button
             className={utilStyles.button}
-            onClick={() => createShortlink(action)}
+            onClick={() => createShortlink()}
           >
-            {action}
+            {encodeType}
           </button>
           <button
             className={utilStyles.button}
@@ -68,9 +68,7 @@ export default function Home() {
             clear
           </button>
         </div>
-        { link && <div className={utilStyles.result}>
-          {link}
-        </div> }
+        {link && <div className={utilStyles.result}>{link}</div>}
       </div>
       <div className={layoutStyles.section}>
         {shortlinks &&
